@@ -7,12 +7,16 @@
 {% block body %}
     <h1>All Pages</h1>
 
-    <ul>
-        {% for entry in entries %}
-            <li>
-                <a href="{% url 'entry' title=entry %}">{{ entry }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if entries %}
+        <ul>
+            {% for entry in entries %}
+                <li>
+                    <a href="{% url 'entry' title=entry %}">{{ entry }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found for "{{ query }}."</p>
+    {% endif %}    
 
 {% endblock %}
