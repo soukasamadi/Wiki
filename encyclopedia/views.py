@@ -42,5 +42,23 @@ def  search(request):
         return render(request, "encyclopedia/search.html", {
             "entries": substring_entries,
             "query": query
-        })         
+        })
+
+def new_page(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+
+        #Check if the page already exists
+        if util.get_entry(title):
+            return render(request, "encyclopedia/new_page.html", {
+                "error": "an encyclopedia entry already exists with the provided title.",
+                "title": title,
+                "content": content
+            })
+
+        util.save_entry(title, content)
+        return redirect("entry", title=title)
+
+    return render(request, "encyclopedia/new_page.html")                 
 

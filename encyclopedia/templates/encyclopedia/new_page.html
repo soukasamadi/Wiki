@@ -1,0 +1,26 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Create New Page
+{% endblock %}
+
+{% block body %}
+    {% if error %}
+    <div style="color: white; margin-top: 10px; margin-left: 25%; background-color: red; padding: 5px 10px; width: 50%; text-align: center;">
+        {{ error }}
+    </div>
+    {% endif %}
+    <h1>Create New Page</h1>
+    <form action="{% url 'new_page' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <label for="title">Page Title:</label>
+            <input type="text" id="title" name="title" value="{{ title|default:''}}" required>
+        </div>
+        <div>
+            <label for="content">Content:</label>
+            <textarea name="content" id="content" rows="10" required>{{ content|default:'' }}</textarea>
+        </div>
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}
