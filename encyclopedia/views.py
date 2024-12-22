@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from . import util
-import markdown2, re
+import markdown2, re, random
 
 
 def index(request):
@@ -78,5 +78,16 @@ def edit_page(request, title):
         return render(request, "encyclopedia/edit_page.html", {
             "title": title,
             "content": content,
-        })                     
+        })
+
+def random_page(request):
+    entries = util.list_entries()
+
+    if entries:
+        random_entry = random.choice(entries)
+        return redirect("entry", title=random_entry)
+    else:
+        return render(request, "encyclopedia/error.html", { 
+            "message":"NO Enries available to display.",
+        })                             
 
